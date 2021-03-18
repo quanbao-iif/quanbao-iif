@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.quanbao</groupId>
+    <artifactId>quanbao-platform</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <description>券宝平台</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.17.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <quanbao-jedis.verion>2.9.1</quanbao-jedis.verion>
+        <oss.sdk.version>2.7.0</oss.sdk.version>
+        <commons-dbutils.version>1.7</commons-dbutils.version>
+        <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
+        <!--framework-component-mybatis -->
+        <mybatisplus-spring-boot-starter.version>1.0.5</mybatisplus-spring-boot-starter.version>
+        <mybatis-plus.version>2.3</mybatis-plus.version>
+        <druid.version>1.1.9</druid.version>
+        <!--sentinel-->
+        <sentinel.version>1.4.2</sentinel.version>
+        <taobao.sdk.version>20200313</taobao.sdk.version>
+        <!--framework-common-tools -->
+        <log4j.version>1.2.17</log4j.version>
+        <lombok.version>1.16.4</lombok.version>
+
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${quanbao-jedis.verion}</version>
+        </dependency>
+
+        <!--apache-dbutils-->
+        <dependency>
+            <groupId>commons-dbutils</groupId>
+            <artifactId>commons-dbutils</artifactId>
+            <version>${commons-dbutils.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatisplus-spring-boot-starter</artifactId>
+            <version>${mybatisplus-spring-boot-starter.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ganshane.specs</groupId>
+            <artifactId>taobao-sdk</artifactId>
+            <version>${taobao.sdk.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+
+        <!--validate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
+        </dependency>
+
+        <!-- Aliyun oss -->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>${oss.sdk.version}</version>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <!-- 本地开发环境 -->
+            <id>dev</id>
+            <!-- 定义该配置的属性 -->
+            <properties>
+                <profiles.active>basic,dev</profiles.active>
+                <profiles.include>common</profiles.include>
+                <config.url>http://127.0.0.1:8887</config.url>
+            </properties>
+            <!-- 设置私库 -->
+            <repositories>
+                <!-- 使用阿里私库 -->
+                <repository>
+                    <id>aliyun-central</id>
+                    <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+                    <name>aliyun</name>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <!-- 设置插件私库 -->
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>aliyun-central</id>
+                    <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+                    <name>aliyun</name>
+                </pluginRepository>
+            </pluginRepositories>
+            <activation>
+                <!-- 设置默认激活这个配置 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+</project>
